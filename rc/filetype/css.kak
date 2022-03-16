@@ -60,7 +60,7 @@ add-highlighter shared/css/selector/ regex [*]|[#.][A-Za-z][A-Za-z0-9_-]* 0:vari
 
 define-command -hidden css-trim-indent %{
     # remove trailing white spaces
-    try %{ execute-keys -draft -itersel <a-x> s \h+$ <ret> d }
+    try %{ execute-keys -draft -itersel x s \h+$ <ret> d }
 }
 
 define-command -hidden css-indent-on-new-line %[
@@ -70,9 +70,9 @@ define-command -hidden css-indent-on-new-line %[
         # filter previous line
         try %[ execute-keys -draft k : css-trim-indent <ret> ]
         # indent after lines ending with with {
-        try %[ execute-keys -draft k <a-x> <a-k> \{$ <ret> j <a-gt> ]
+        try %[ execute-keys -draft k x <a-k> \{$ <ret> j <a-gt> ]
         # deindent closing brace when after cursor
-        try %[ execute-keys -draft <a-x> <a-k> ^\h*\} <ret> gh / \} <ret> m <a-S> 1<a-&> ]
+        try %[ execute-keys -draft x <a-k> ^\h*\} <ret> gh / \} <ret> m <a-S> 1<a-&> ]
     ]
 ]
 
