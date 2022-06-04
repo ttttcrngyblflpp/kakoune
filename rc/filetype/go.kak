@@ -128,34 +128,6 @@ define-command -hidden go-insert-on-new-line %[
     evaluate-commands -no-hooks -draft -itersel %[
         # copy // comments prefix and following white spaces
         try %{ execute-keys -draft <semicolon><c-s>k<a-x> s ^\h*\K/{2,}\h* <ret> y<c-o>P<esc> }
-
-        # Wisely add '}'.
-        evaluate-commands -save-regs x %[
-            # Save previous line indent in register x.
-            try %[ execute-keys -draft k<a-x>s^\h+<ret>"xy ] catch %[ reg x '' ]
-            try %[
-                # Validate previous line and that it is not closed yet.
-                execute-keys -draft k<a-x> <a-k>^<c-r>x.*\{\h*\(?\h*$<ret> j}iJ<a-x> <a-K>^<c-r>x\)?\h*\}<ret>
-                # Insert closing '}'.
-                execute-keys -draft o<c-r>x}<esc>
-                # Delete trailing '}' on the line below the '{'.
-                execute-keys -draft Xs\}$<ret>d
-            ]
-        ]
-
-        # Wisely add ')'.
-        evaluate-commands -save-regs x %[
-            # Save previous line indent in register x.
-            try %[ execute-keys -draft k<a-x>s^\h+<ret>"xy ] catch %[ reg x '' ]
-            try %[
-                # Validate previous line and that it is not closed yet.
-                execute-keys -draft k<a-x> <a-k>^<c-r>x.*\(\h*$<ret> J}iJ<a-x> <a-K>^<c-r>x\)<ret>
-                # Insert closing ')'.
-                execute-keys -draft o<c-r>x)<esc>
-                # Delete trailing ')' on the line below the '('.
-                execute-keys -draft Xs\)\h*\}?\h*$<ret>d
-            ]
-        ]
     ]
 ]
 
